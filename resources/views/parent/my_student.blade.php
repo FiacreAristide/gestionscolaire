@@ -74,43 +74,45 @@
 
                     <tr>
                       <td>{{ $value->id}}</td>
-                      <td>{{ $value->name}} {{ $value->prenom}}</td>
-                      <td>{{ $value->class_name}}</td>
-                      <td>{{ $value->domain_name}}</td>
-                      <td>{{ $value->parcours}}</td>
-                      <td>{{ $value->subject_name}}</td>
-                      <td>{{ $value->email}}</td>
-                        <td>
+                      <td style="min-width: 200px;">{{ $value->name}} {{ $value->prenom}}</td>
+                      <td style="min-width: 100px;">{{ $value->class_name}}</td>
+                      <td style="min-width: 200px;">{{ $value->domain_name}}</td>
+                      <td style="min-width: 200px;">{{ $value->parcours}}</td>
+                      <td style="min-width: 200px;">{{ $value->subject_name}}</td>
+                      <td style="min-width: 200px;">{{ $value->email}}</td>
+                        <td style="min-width: 300px; text-align:center;">
                          @if(!empty($value->date_naissance))
                           {{ date('d-m-Y', strtotime($value->date_of_birth))}}
                          @endif
                         </td>
                      
-                      <td>{{ $value->lieu_naissance}}</td>
-                      <td>{{ $value->pays_naissance}}</td>
-                      <td>{{ $value->nationalite}}</td>
-                      <td>{{ $value->ehtnie}}</td>
-                      <td>{{ $value->prefecture}}</td>
-                      <td>{{ $value->sexe}}</td>
-                      <td>{{ $value->situation_matrimoniale}}</td>
-                      <td>{{ $value->adresse}}</td>
-                      <td>{{ $value->ville}}</td>
-                      <td>{{ $value->pays_residence}}</td>
-                      <td>{{ $value->telephone}}</td>
-                      <td>{{ $value->boursier}}</td>
-                      <td>{{ $value->debut_bourse}}</td>
-                      <td>{{ $value->religion}}</td>
-                      <td>{{ $value->etatPhys}}</td>
-                      <td>{{ $value->handicap}}</td>
-                      <td>{{ $value->person_prev}}</td>
-                      <td>{{ $value->tel_prev}}</td>
-                      <td>{{ ($value->status ==0) ? 'Active' : 'Inactive'}}</td>
+                      <td style="min-width: 100px; ">{{ $value->lieu_naissance}}</td>
+                      <td style="min-width: 100px; ">{{ $value->pays_naissance}}</td>
+                      <td style="min-width: 200px; ">{{ $value->nationalite}}</td>
+                      <td style="min-width: 100px; ">{{ $value->ehtnie}}</td>
+                      <td style="min-width: 100px; ">{{ $value->prefecture}}</td>
+                      <td style="min-width: 100px; ">{{ $value->sexe}}</td>
+                      <td style="min-width: 100px; ">{{ $value->situation_matrimoniale}}</td>
+                      <td style="min-width: 200px; ">{{ $value->adresse}}</td>
+                      <td style="min-width: 100px; ">{{ $value->ville}}</td>
+                      <td style="min-width: 100px; ">{{ $value->pays_residence}}</td>
+                      <td style="min-width: 200px; ">{{ $value->telephone}}</td>
+                      <td style="min-width: 200px; ">{{ $value->boursier}}</td>
+                      <td style="min-width: 300px; ">{{ $value->debut_bourse}}</td>
+                      <td style="min-width: 200px; ">{{ $value->religion}}</td>
+                      <td style="min-width: 200px; ">{{ $value->etatPhys}}</td>
+                      <td style="min-width: 200px; ">{{ $value->handicap}}</td>
+                      <td style="min-width: 100px; ">{{ $value->person_prev}}</td>
+                      <td style="min-width: 200px; ">{{ $value->tel_prev}}</td>
+                      <td style="min-width: 100px; ">{{ ($value->status ==0) ? 'Active' : 'Inactive'}}</td>
                       
-                      <td>{{ date('d-m-y h:i', strtotime($value->created_at))}}</td>
-                      <td style="width: 500px;">
+                      <td style="min-width: 200px; ">{{ date('d-m-y h:i', strtotime($value->created_at))}}</td>
+                      <td style="min-width: 300px; text-align:center;">
                         <a href="{{ url('parent/my_student/course/'.$value->id)}}" class="btn btn-success btn-sm">Matières</a>
-
-                        <a href="{{ url('parent/my_student/exam_timetable/'.$value->id)}}" class="btn btn-primary btn-sm">examen</a>
+                        <a href="{{ url('parent/my_student/exam_timetable/'.$value->id)}}" class="btn btn-primary btn-sm">Examen</a>
+                        <a href="{{ url('parent/my_student/exam_result/'.$value->id)}}" class="btn btn-success btn-sm">Résultat</a>
+                        <a href="{{ url('parent/my_student/attendance/'.$value->id)}}" class="btn btn-primary btn-sm">Présence</a>
+                        
                       </td>
                     </tr>
                     @endforeach

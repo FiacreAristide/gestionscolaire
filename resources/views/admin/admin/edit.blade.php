@@ -30,14 +30,14 @@
 
                   <div class="form-group">
                     <label>Nom</label>
-                    <input type="text" class="form-control" placeholder="Enter name" name="name" required value="{{
+                    <input type="text" class="form-control" placeholder="Nom" name="name" required value="{{
                      old('name',$getRecord->name)
                       
                     }}">
                   </div>
                   <div class="form-group">
                     <label>Email</label>
-                    <input type="email" class="form-control" placeholder="Enter email" name="email" required value="{{
+                    <input type="email" class="form-control" placeholder="Email" name="email" required value="{{
                       old('email',$getRecord->email)
                       
                     }}">
@@ -47,7 +47,7 @@
                     <label >Mot de passe</label>
                     <input type="text" class="form-control" placeholder="Password" name="password">
 
-                    <p>Voulez vous changer de mot de passe ? Veuillez entrer le nouveau mot de passe</p>
+                    <p>Voulez-vous changer de mot de passe ? Veuillez entrer le nouveau mot de passe</p>
 
 
                   </div>

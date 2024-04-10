@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Mon calendrier d'examen</h1>
+            <h1 style="font-weight: bold;">Calendrier d'examen/Classes</h1>
           </div>
 
         </div>
@@ -26,9 +26,14 @@
 
           <div class="col-md-12">
            
-            
-
+             
+          @if (empty(array_filter($getRecord, function ($record) {
+              return !empty($record['exam']);
+              })))
+              <p style="color: red; font-size:20px; font-weight:800;text-align:center">Examen non programmé</p>
+          @else
             @foreach($getRecord as $value)
+            @if (!empty($value['exam']))
             <h2 style="font-weight: bold;">{{$value['class_name']}}</h2>
              @foreach($value['exam'] as $exam)
             <div class="card">
@@ -69,9 +74,9 @@
                                 @endphp
                                 {{ $dayMapping[date('l', strtotime($valueS['exam_date']))] }}
                         </td>
-                            <td>{{ date('d-m-Y', strtotime($valueS['exam_date']))}}</td>
-                            <td>{{ date('h:i', strtotime($valueS['start_time']))}} </td>
-                            <td>{{date('h:i', strtotime($valueS['end_time']))}}</td>
+                            <td>{{ $valueS['exam_date'] }}</td>
+                            <td>{{ $valueS['start_time'] }} </td>
+                            <td>{{ $valueS['end_time'] }}</td>
                             <td>{{$valueS['room_number'] }} </td>
                             <td>{{$valueS['full_mark']}} </td>
                             <td>{{$valueS['passing_mark'] }} </td>
@@ -84,8 +89,9 @@
               </div>
             </div>
              @endforeach
+             @endif
             @endforeach
-            
+        @endif    
 
           </div>
         </div>

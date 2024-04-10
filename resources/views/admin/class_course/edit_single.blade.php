@@ -25,60 +25,47 @@
             <div class="card card-primary">
               <form method="post" action="">
                 {{ csrf_field() }}
-
                 <div class="card-body">
-
                   <div class="form-group">
                     <label>Nom de la classe</label>
                     <select class="form-control" name="class_id" required>
-                      <option value="0">---Selectionner Classe---</option>
-                      
+                      <option value=""> Selectionner Classe </option>
                       @foreach($getClass as $class)
-                      <option
-                      {{ ($getRecord->class_id == $class->id) ? 'selected':''}}
+                      <option {{ ($getRecord->class_id == $class->id) ? 'selected':''}}
                       value="{{$class->id}}">{{$class->name}}</option>
-                
                       @endforeach
-                  </select>
-                </div>
+                    </select>
+                  </div>
 
-                <div class="form-group">
-                    <label>Nom du cours</label>
-                    <select class="form-control" name="course_id" required>
-                      <option value="0">---Selectionner Cours---</option>
-                      
-                      @foreach($getCourse as $course)
-                      <option
-                      {{ ($getRecord->course_id == $course->id) ? 'selected':''}}
-                      value="{{$course->id}}">{{$course->name}}</option>
-                
-                      @endforeach
-                  </select>
-                </div>
+                  <div class="form-group">
+                      <label>Nom du cours</label>
+                      <select class="form-control" name="course_id" required>
+                        <option value=""> Selectionner Cours </option>
+                        @foreach($getCourse as $course)
+                        <option
+                        {{ ($getRecord->course_id == $course->id) ? 'selected':''}}
+                        value="{{$course->id}}">{{$course->name}}</option>
+                        @endforeach
+                    </select>
+                  </div>
 
-                <div class="form-group">
-                  <label>Status</label>
-                  <select class="form-control" name="status">
-                    <option {{ ($getRecord->status == 0) ? 'selected':''}} value="0">Active</option>
-                    <option {{ ($getRecord->status == 1) ? 'selected':''}} value="1">Inactive</option>
-                  </select>
-                </div>
-
-
+                  <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" name="status">
+                      <option {{ ($getRecord->status == 0) ? 'selected':''}} value="0">Active</option>
+                      <option {{ ($getRecord->status == 1) ? 'selected':''}} value="1">Inactive</option>
+                    </select>
+                  </div>
               </div>
-
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Enregistrer</button>
               </div>
             </form>
           </div>
-
         </div>
       </div>
-      <!-- /.row -->
-    </div><!-- /.container-fluid -->
+    </div>
   </section>
-  <!-- /.content -->
 </div>
 
 

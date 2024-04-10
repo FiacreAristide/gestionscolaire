@@ -14,16 +14,25 @@ class CourseModel extends Model
 
     protected $table ='course';
 
+    public function schoolYear()
+    {
+        return $this->belongsTo(SchoolYear::class);
+    }
+
     static public function getSingle($id)
     {
         return self::find($id);
     }
 
-   static public function getRecord()
+   static public function getRecord($activeYear)
     {
-        $return = CourseModel::select('course.*', 'users.name as created_by_name')
-            ->join('users', 'users.id', 'course.created_by');
-
+        $return = CourseModel::select('course.*','subject.name as subject_name','domain.name as domain_name','mention.nom as mention_name', 'users.name as created_by_name')
+            ->join('subject', 'subject.id', 'course.subject_id')
+            ->join('domain', 'domain.id', 'course.domain_id')
+            ->join('mention', 'mention.id', 'course.mention_id')
+            ->join('users', 'users.id', 'course.created_by')
+            ->where('course.school_year_id','=', $activeYear);
+            
             if(!empty(Request::get('code_ue'))){
                 $return = $return->where('course.code_ue','like','%'.Request::get('code_ue') .'%');
             }
@@ -48,23 +57,59 @@ class CourseModel extends Model
     }
 
 
-    static public function getOthersCourses($class_id)
+    static public function getProgressYearRecord()
     {
-        $user_class_id = Auth::user()->class_id;
+        $return = CourseModel::select('course.*','subject.name as subject_name','domain.name as domain_name', 'users.name as created_by_name')
+            ->join('subject', 'subject.id', 'course.subject_id')
+            ->join('domain', 'domain.id', 'course.domain_id')
+            ->join('users', 'users.id', 'course.created_by');
+            
+            if(!empty(Request::get('code_ue'))){
+                $return = $return->where('course.code_ue','like','%'.Request::get('code_ue') .'%');
+            }
 
-        $result = DB::table('course as c')
-        ->leftJoin('class_course as cc', function ($join) use ($user_class_id) {
-        $join->on('c.id', '=', 'cc.course_id')
-             ->where('cc.class_id', '=', $user_class_id);
-        })
-        ->select('c.*')
-        ->whereNull('cc.course_id')
-        ->get();
-        return $result;
+            if(!empty(Request::get('name'))){
+                $return = $return->where('course.name','like','%'.Request::get('name') .'%');
+            }
+
+            if(!empty(Request::get('type'))){
+                $return = $return->where('course.type','like','%'.Request::get('type') .'%');
+            }
+
+            if(!empty(Request::get('date'))){
+                $return = $return->where('course.created_at','=',Request::get('date'));
+            }
+
+            $return = $return->where('course.is_deleted', '=', 0)
+            ->orderBy('course.id', 'desc')
+            ->paginate(20);
+
+            return $return; 
+    }
+
+    static public function getMyCourseByDomain($domain_id,$subject_id,$school_year)
+    {
+        return self::select('course.*')
+        ->where('course.domain_id', $domain_id)
+        ->where('course.subject_id', $subject_id)
+        ->where('course.school_year_id', $school_year)
+        ->get(); 
     }
 
 
-    static public function getCourse()
+    static public function getCourse($activeYear)
+    {
+        $return = CourseModel::select('course.*')
+            ->join('users', 'users.id','course.created_by','left')
+            ->where('course.is_deleted', '=', 0)
+            ->where('course.status', '=', 0)
+            ->where('course.school_year_id','=', $activeYear)
+            ->orderBy('course.name', 'asc')
+            ->get();
+            return $return;
+    } 
+    
+    static public function getProgressYearCourse()
     {
         $return = CourseModel::select('course.*')
             ->join('users', 'users.id','course.created_by','left')
@@ -72,7 +117,6 @@ class CourseModel extends Model
             ->where('course.status', '=', 0)
             ->orderBy('course.name', 'asc')
             ->get();
-
             return $return;
-    }    
+    } 
 }

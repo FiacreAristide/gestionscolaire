@@ -27,9 +27,9 @@
                 {{ csrf_field() }}
 
                 <div class="card-body">
-
+                <input type="hidden" value="{{ App\Models\SchoolYear::getActiveYear()->title }}" class="form-control" name="school_year_id"> 
                   <div class="form-group ">
-                    <label>Nom examen</label>
+                    <label>Nom examen/devoir</label>
                     <input type="text" class="form-control" placeholder="Enter name" name="name" required value="{{ old('name') }}">
                   </div>
 

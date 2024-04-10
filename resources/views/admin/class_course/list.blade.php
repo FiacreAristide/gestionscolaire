@@ -12,7 +12,7 @@
           </div>
 
           <div class="col-sm-6" style="text-align: right;">
-            <a href="{{ url('admin/class_course/add') }}" class="btn btn-primary">Ajouter</a>
+            <a href="{{ url('admin/class_course/add') }}" class="btn btn-primary">Associer</a>
           </div>
 
         </div>
@@ -30,7 +30,7 @@
 
           <div class="col-md-12">
             <div class="card-header">
-              <h3 class="card-title">Rechercher Domaine-Spécialisation </h3>
+              <h3 class="card-title">Rechercher Classe-cours </h3>
             </div>
 
             <div class="card card-primary">
@@ -40,20 +40,15 @@
 
                   <div class="row">
 
-                    <div class="form-group col-md-3">
-                      <label>Domaine</label>
-                      <input type="text" class="form-control" name="class_name"  value="{{ Request::get('class_name')}}" placeholder="Class name">
+                    <div class="form-group col-md-4">
+                      <label>Classe</label>
+                      <input type="text" class="form-control" name="class_name"  value="{{ Request::get('class_name')}}" placeholder="Nom de la class">
                     </div>
 
 
-                    <div class="form-group col-md-3">
-                      <label>Spécialisation</label>
-                      <input type="text" class="form-control" name="subject_name"  value="{{ Request::get('subject_name')}}" placeholder="Subject name">
-                    </div>
-
-                    <div class="form-group col-md-3">
-                      <label>Date</label>
-                      <input type="date" class="form-control"  name="date"  value="{{ Request::get('date')}}" placeholder="date">
+                    <div class="form-group col-md-4">
+                      <label>Cours</label>
+                      <input type="text" class="form-control" name="course_name"  value="{{ Request::get('course_name')}}" placeholder="Nom du cours">
                     </div>
 
                     <div class="form-group col-md-3">
@@ -73,26 +68,26 @@
                 <h3 class="card-title">Liste Classes-Cours </h3>
               </div>
 
-              <div class="card-body p-0">
+              <div class="card-body p-0" style="overflow: auto;">
                 <table class="table">
                   <thead>
                     <tr>
                       <th>id</th>
-                      <th>Classes</th>
-                      <th>Cours</th>
-                      <th>Status</th>
-                      <th>Ajouté par</th>
-                      <th>Ajouté le</th>
-                      <th>Action</th>
+                      <th style="width: 300px;text-align: center;">Classes</th>
+                      <th style="width: 300px;text-align: center;">Cours</th>
+                      <th style="width: 300px;text-align: center;">Status</th>
+                      <th style="width: 300px;text-align: center;">Ajouté par</th>
+                      <th style="width: 300px;text-align: center;">Ajouté le</th>
+                      <th style="text-align: center; width:1000px;">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($getRecord as $value)
+                    @forelse($getRecord as $value)
                     <tr>
                       <td>{{ $value->id }}</td>
-                      <td>{{ $value->class_name }}</td>
-                      <td>{{ $value->course_name }}</td>
-                      <td>
+                      <td style="text-align: center;">{{ $value->class_name }}</td>
+                      <td style="text-align: center;">{{ $value->course_name }}</td>
+                      <td style="text-align: center;">
                         @if($value->status == 0)
                         Active
                         @else
@@ -100,17 +95,21 @@
                         @endif
                       </td>
                       <td>{{ $value->created_by_name}}</td>
-                      <td>{{ date('d-m-Y H:i ', strtotime($value->created_at)) }}</td>
+                      <td style="text-align: center;">{{ date('d-m-Y H:i ', strtotime($value->created_at)) }}</td>
 
-                      <td>
-                        <a href="{{ url('admin/class_course/edit_single/'.$value->id)}}" class="btn btn-primary">Modifier cette ligne uniquement </a>
+                      <td style="margin-left: 60px;display:grid; grid-template-columns:200px;grid-row-gap:10px;">
+                        <a href="{{ url('admin/class_course/edit_single/'.$value->id)}}" class="btn btn-primary">Modifier uniquement </a>
 
                         <a href="{{ url('admin/class_course/edit/'.$value->id)}}" class="btn btn-primary">Modifier toute la classe</a>
 
                         <a href="{{url('admin/class_course/delete/'.$value->id)}}" class="btn btn-danger">Supprimer</a>
                       </td>
                     </tr>
-                    @endforeach 
+                    @empty
+                      <tr>
+                        <td colspan="100%" style="text-align: center;">Aucun résultat trouvé</td>
+                      </tr>
+                    @endforelse 
                   </tbody>
                 </table>
 

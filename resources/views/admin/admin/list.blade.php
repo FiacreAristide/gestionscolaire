@@ -81,27 +81,32 @@
                   <thead>
                     <tr>
                       <th>id</th>
-                      <th>Nom</th>
+                      <th>Nom & prénoms</th>
                       <th>Email</th>
                       <th>Ajouté le</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($getRecord as $value)
+                    @forelse($getRecord as $value)
 
                     <tr>
                       <td>{{ $value->id}}</td>
-                      <td>{{ $value->name}}</td>
+                      <td>{{ $value->name}} {{ $value->prenom}}</td>
                       <td>{{ $value->email}}</td>
                       <td>{{ date('d-m-y h:i', strtotime($value->created_at))}}</td>
 
                       <td>
-                        <a href="{{ url('admin/admin/edit/'.$value->id)}}" class="btn btn-primary">Modifier</a>
-                        <a href="{{url('admin/admin/delete/'.$value->id)}}" class="btn btn-danger">Supprimer</a>
+                        <a href="{{ url('admin/admin/edit/'.$value->user_id)}}" class="btn btn-primary">Modifier</a>
+                        <a href="{{url('admin/admin/delete/'.$value->user_id)}}" class="btn btn-danger">Supprimer</a>
                       </td>
                     </tr>
-                    @endforeach
+
+                    @empty
+                      <tr>
+                        <td colspan="100%" style="text-align: center;">Aucun résultat trouvé</td>
+                      </tr>
+                    @endforelse
                   </tbody>
                 </table>
 

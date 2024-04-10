@@ -27,13 +27,13 @@
                 {{ csrf_field() }}
 
                 <div class="card-body">
-
+                <input type="hidden" name="school_year_id" value="{{ $getActiveYear->id }}">
                 <div class="form-group col-md-12">
                   <label>Domaine<span style="color:red;">*</span></label>  
                   <select class="form-control" required name="domain_id">
-                    <option value="">---Selectionner Domaine---</option>
+                    <option value=""> Selectionner Domaine </option>
                       @foreach($getDomain as $value)
-                    <option {{(old('domain_id') == $value->id) ? 'selected' : ''}} value="{{ $value->id}}">{{ $value->name}}</option>
+                        <option value="{{ $value->id}}">{{ $value->name}}</option>
                       @endforeach
                   </select> 
                 </div>
@@ -43,7 +43,7 @@
                   <div class="form-group">
                     <label>Parcours</label>
                     <select class="form-control" name="parcours">
-                      <option value="">---Selectionner parcours---</option>
+                      <option value=""> Selectionner parcours </option>
                       <option value="Licence">Licence</option>
                       <option value="Master">Master</option>
                     </select>

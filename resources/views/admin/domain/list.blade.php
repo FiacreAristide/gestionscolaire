@@ -81,7 +81,7 @@
                   </thead>
                   <tbody>
 
-                    @foreach($getRecord as $value)
+                    @forelse($getRecord as $value)
                       <tr>
                         <td>{{ $value->id }}</td>
                         <td>{{ $value->name }}</td>
@@ -102,7 +102,12 @@
                         <a href="{{url('admin/domain/delete/'.$value->id)}}" class="btn btn-danger">Supprimer</a>
                       </td>
                       </tr>
-                    @endforeach 
+                    @empty
+                      <tr>
+                        <td colspan="100%" style="text-align: center;">Aucun résultat trouvé</td>
+                      </tr>
+                    @endforelse
+
                   </tbody>
                 </table>
 

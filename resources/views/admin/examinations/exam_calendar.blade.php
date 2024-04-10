@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Calendrier des examens </h1>
+            <h1>Calendrier des examens & Devoirs </h1>
           </div>
         </div>
       </div>
@@ -33,13 +33,11 @@
                   <form method="get" action="">
                     
                     <div class="card-body">
-
                       <div class="row">
-
                       <div class="form-group col-md-4">
                         <label>Nom</label>
                         <select class="form-control" name="exam_id" required>
-                          <option value="">selectionner examen</option>
+                          <option value="">selectionner examen/devoir</option>
                           @foreach($getExam as $exam)
                             <option {{ (Request::get('exam_id')== $exam->id) ? 'selected' : ''}} value="{{ $exam->id}}">{{ $exam->name}}</option>
                           @endforeach
@@ -59,10 +57,8 @@
 
                       <div class="form-group col-md-3">
                         <button class="btn btn-primary" type="submit" style="margin-top: 32px;">Rechercher</button>
-
                          <a class="btn btn-success" style="margin-top: 32px;" href="{{ url('admin/examinations/calendar')}}">Annuler</a>
                       </div>
-
                     </div>
                     </div>
                   </form>
@@ -79,15 +75,14 @@
               <div class="card-header">
                 <h3 class="card-title">Calendrier </h3>
               </div>
-
               <div class="card-body p-0">
                 <table class="table">
                   <thead>
                     <tr>
                       <th>Cours</th>
-                      <th>Date Examen</th>
-                      <th>Début de l'examen</th>
-                      <th>Fin de l'examen</th>
+                      <th>Date Examen/Devoir</th>
+                      <th>Début examen/devoir</th>
+                      <th>Fin examen/devoir</th>
                       <th>Salle</th>
                       <th>Noté sur</th>
                       <th>Moyenne</th>
@@ -103,26 +98,26 @@
                               <input type="hidden" value="{{ $value['course_id'] }}" class="form-control" name="calendar[{{ $i }}][course_id]">
                            </td>
                            <td>
-                             <input type="date" class="form-control" value="{{ $value['exam_date'] }}" name="calendar[{{ $i }}][exam_date]">
+                             <input type="date" class="form-control" value="{{ $value['exam_date'] }}" name="calendar[{{ $i }}][exam_date]" required>
                            </td>
                            <td>
-                             <input type="time" class="form-control" value="{{ $value['start_time'] }}" name="calendar[{{ $i }}][start_time]">
-                           </td>
-
-                           <td>
-                             <input type="time" class="form-control" value="{{ $value['end_time'] }}" name="calendar[{{ $i }}][end_time]">
+                             <input type="time" class="form-control" value="{{ $value['start_time'] }}" name="calendar[{{ $i }}][start_time]" required>
                            </td>
 
                            <td>
-                             <input type="text" class="form-control" value="{{ $value['room_number'] }}" name="calendar[{{ $i }}][room_number]">
+                             <input type="time" class="form-control" value="{{ $value['end_time'] }}" name="calendar[{{ $i }}][end_time]" required>
                            </td>
 
                            <td>
-                             <input type="text" class="form-control" value="{{ $value['full_mark'] }}" name="calendar[{{ $i }}][full_mark]">
+                             <input type="text" class="form-control" value="{{ $value['room_number'] }}" name="calendar[{{ $i }}][room_number]" required>
                            </td>
 
                            <td>
-                             <input type="text" class="form-control" value="{{ $value['passing_mark'] }}" name="calendar[{{ $i }}][passing_mark]">
+                             <input type="text" class="form-control" value="{{ $value['full_mark'] }}" name="calendar[{{ $i }}][full_mark]" required>
+                           </td>
+
+                           <td>
+                             <input type="text" class="form-control" value="{{ $value['passing_mark'] }}" name="calendar[{{ $i }}][passing_mark]" required>
                            </td>
                         </tr>
 
@@ -134,10 +129,10 @@
                 </table>
               </div>
             <div style="text-align:center;padding: 20px;">
-                  <button class="btn btn-primary" >Enregistrer</button>
-                </div>
+              <button class="btn btn-primary" >Enregistrer</button>
             </div>
-             </form> 
+            </div>
+            </form> 
           @endif
 
           </div>

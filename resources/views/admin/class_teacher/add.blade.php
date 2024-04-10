@@ -29,12 +29,11 @@
                 {{ csrf_field() }}
 
                 <div class="card-body">
-
-
-                  <div class="form-group">
+                <input type="hidden" name="school_year_id" value="{{ $getActiveYear->id }}">
+                  <div class="form-group col-md-12">
                     <label>Classe</label>
                     <select class="form-control" name="class_id" required>
-                      <option value="">---Selectionner Classe---</option>
+                      <option value=""> Selectionner Classe </option>
                       
                       @foreach($getClass as $class)
                           <option value="{{$class->id}}">{{$class->name}}</option>
@@ -42,7 +41,7 @@
                     </select>
                   </div>
 
-                  <div>
+                  <div class="form-group col-md-12">
                     <label>Enseignants</label>
                     
                       @foreach($getTeacher as $teacher)

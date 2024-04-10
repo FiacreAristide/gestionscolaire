@@ -77,6 +77,7 @@
 
             <form action="{{ url('admin/class_timetable/add') }}" method="post">
               {{ csrf_field() }}
+              <input type="hidden" name="school_year_id" value="{{ $getActiveYear->id }}">
               <input type="hidden" name="course_id" value="{{ Request::get('course_id') }}">
               <input type="hidden" name="class_id" value="{{ Request::get('class_id') }}">
 
@@ -99,7 +100,7 @@
                       @php
                         $i = 1;
                       @endphp
-                        @foreach($week as $value)
+                        @forelse($week as $value)
                           <tr>
                             <th>
 
@@ -131,7 +132,11 @@
                         @php
                           $i++;
                         @endphp
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="100%" style="text-align: center;">Aucun résultat trouvé</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                   </table>
 

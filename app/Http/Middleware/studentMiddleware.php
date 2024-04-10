@@ -37,3 +37,34 @@ class StudentMiddleware
         return $next($request);
     }
 }
+
+
+
+// class StudentMiddleware
+// {
+//     /**
+//      * Handle an incoming request.
+//      *
+//      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+//      */
+//     public function handle(Request $request, Closure $next): Response
+//     {
+//         if(Auth::check())
+//         {
+//             if(Auth::user()->user_type == 'student')
+//             {
+//                 return $next($request);
+//             }
+//             else
+//             {
+//                 Auth::logout();
+//                 return redirect(url(''));
+//             }
+//         }
+//         else
+//         {
+//             Auth::logout();
+//             return redirect(url(''));
+//         }
+//     }
+// }

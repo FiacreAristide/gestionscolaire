@@ -28,9 +28,24 @@
 
                 <div class="card-body">
 
+                <div class="form-group col-md-12">
+                    <label>Domaine<span style="color:red;">*</span></label>  
+                    <select class="form-control" required name="domain_id">
+                      <option value=""> Selectionner Domaine </option>
+                      @foreach($getDomain as $value)
+                      <option {{(old('domain_id',$getRecord->domain_id) == $value->id) ? 'selected' : ''}} value="{{ $value->id}}">{{ $value->name}}</option>
+                      @endforeach
+                    </select> 
+                  </div>
+
                   <div class="form-group">
                     <label>Nom de la classe</label>
                     <input type="text" class="form-control" placeholder="Class name" name="name" required value="{{ $getRecord->name}}" >
+                  </div>
+
+                  <div class="form-group col-md-12">
+                    <label>Montant</label>
+                    <input type="number" class="form-control" placeholder="xxx.xxx.xxx FCFA" name="amount" value="{{ $getRecord->amount}}" required >
                   </div>
 
                   <div class="form-group">
@@ -40,12 +55,9 @@
                       <option {{ ($getRecord->status == 1) ? 'selected' : ''}} value="1">Inactive</option>
                     </select>
                   </div>
-
-
                 </div>
-
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Update</button>
+                  <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </div>
               </form>
             </div>

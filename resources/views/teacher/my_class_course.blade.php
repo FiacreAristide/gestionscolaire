@@ -10,8 +10,6 @@
           <div class="col-sm-6">
             <h1>Classes & Cours</h1>
           </div>
-
-
         </div>
       </div>
     </section>
@@ -37,16 +35,12 @@
               <div class="card-body p-0">
                 <table class="table">
                   <thead>
-                    <tr>
-                     
+                    <tr>                     
                       <th>Classes</th>
                       <th>Cours</th>
-                      <th>Type</th>
                       <th>Aujourd'hui</th>
-                      <th>Ajouté le</th>
-                      <th>Action</th>
-                     
-                      
+                      <!-- <th>Ajouté le</th> -->
+                      <th>Action</th>          
                     </tr>
                   </thead>
                   <tbody>                      
@@ -54,36 +48,32 @@
                      <tr>                    
                       <td>{{ $value->class_name }}</td>
                       <td>{{ $value->course_name }}</td>
-                      <td>{{ $value->course_type }}</td>
                       <td>
-                          @php
-                              $classCourse = $value->getMyTimeTable($value->class_id, $value->course_id);
-                          @endphp
+                        @php
+                          $classCourse = $value->getMyTimeTable($value->class_id, $value->course_id);
+                        @endphp
 
-                          @if(!empty($classCourse))
-                              @php
-                                  $dayMapping = [
-                                      'Monday' => 'lundi',
-                                      'Tuesday' => 'mardi',
-                                      'Wednesday' => 'mercredi',
-                                      'Thursday' => 'jeudi',
-                                      'Friday' => 'vendredi',
-                                      'Saturday' => 'samedi',
-                                      'Sunday' => 'dimanche',
+                        @if(!empty($classCourse))
+                          @php
+                            $dayMapping = [
+                              'Monday' => 'lundi',
+                              'Tuesday' => 'mardi',
+                              'Wednesday' => 'mercredi',
+                              'Thursday' => 'jeudi',
+                              'Friday' => 'vendredi',
+                              'Saturday' => 'samedi',
+                              'Sunday' => 'dimanche',
                                   ];
                               @endphp
-
                               De 
-                                <span style="color:blue; font-weight: bold;"> {{ date('h:i',strtotime($classCourse->start_time)) }} </span> à 
-                                <span style="color:blue; font-weight: bold;"> {{ date('h:i',strtotime($classCourse->end_time)) }}</span>
-                                
+                                <span style="color:blue; font-weight: bold;"> {{ $classCourse->start_time }} </span> à 
+                                <span style="color:blue; font-weight: bold;"> {{ $classCourse->end_time }}</span>                               
                                 <br>
-                                <span style="color:red; font-weight: bold;">Salle: {{ $classCourse->room_number}}</span>
-                                
+                                <span style="color:red; font-weight: bold;">Salle: {{ $classCourse->room_number}}</span>                       
                           @endif
                       </td>
 
-                      <td>{{ date('d-m-Y H:i ', strtotime($value->created_at)) }}</td>
+                      <!-- <td>{{ date('d-m-Y H:i ', strtotime($value->created_at)) }}</td> -->
                       <td>
                         <a class="btn btn-primary" href="{{ url('teacher/my_class_course/class_timetable/'.$value->class_id.'/'.$value->course_id)}}">Horaire</a>
                       </td>

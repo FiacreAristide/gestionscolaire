@@ -99,10 +99,7 @@ class UserController extends Controller
         $teacher->dernier_diplome = trim($request->dernier_diplome);
         $teacher->grade_universitaire = trim($request->grade_universitaire);
         $teacher->email = trim($request->email);
-
-
         $teacher->save();
-
         return redirect()->back()->with('success', "Compte mis à jour avec succès");
       }  
 

@@ -10,7 +10,6 @@
           <div class="col-sm-6">
             <h1>Calendrier d'examen de ( {{ $getStudent->name}} {{ $getStudent->prenom}})</h1>
           </div>
-
         </div>
       </div>
     </section>
@@ -66,9 +65,9 @@
                                 @endphp
                                 {{ $dayMapping[date('l', strtotime($valueS['exam_date']))] }}
                         </td>
-                            <td>{{ date('d-m-Y', strtotime($valueS['exam_date']))}}</td>
-                            <td>{{ date('h:i', strtotime($valueS['start_time']))}} </td>
-                            <td>{{date('h:i', strtotime($valueS['end_time']))}}</td>
+                            <td>{{ $valueS['exam_date']}}</td>
+                            <td>{{ $valueS['start_time'] }} </td>
+                            <td>{{$valueS['end_time']}}</td>
                             <td>{{$valueS['room_number'] }} </td>
                             <td>{{$valueS['full_mark']}} </td>
                             <td>{{$valueS['passing_mark'] }} </td>

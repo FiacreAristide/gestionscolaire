@@ -8,69 +8,45 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Liste Spécialisations</h1>
+            <h1>Liste Spécialités</h1>
           </div>
-
           <div class="col-sm-6" style="text-align: right;">
             <a href="{{ url('admin/subject/add') }}" class="btn btn-primary">Ajouter une spécialité</a>
           </div>
-
         </div>
       </div>
     </section>
-
-
-
-
     <!-- Main content -->
     <section class="content">
-
       <div class="container-fluid">
         <div class="row">
-
           <div class="col-md-12">
             <div class="card-header">
               <h3 class="card-title">Rechercher une spécialité </h3>
             </div>
-
             <div class="card card-primary">
               <form method="get" action="">
-
                 <div class="card-body">
-
                   <div class="row">
-
                     <div class="form-group col-md-3">
                       <label>Nom</label>
-                      <input type="text" class="form-control" placeholder="Enter name" name="name"  value="{{ Request::get('name')}}" placeholder="name">
+                      <input type="text" class="form-control" placeholder="Nom" name="name"  value="{{ Request::get('name')}}">
                     </div>
-
-
                     <div class="form-group col-md-3">
                       <label>Parcours</label>
                       <select class="form-control" name="parcours">
-                        <option value="">---Select type---</option>
+                        <option value="">Selectionner parcours</option>
                         <option {{ (Request::get('parcours') == 'Licence') ? 'selected' : ''}}
-
-                        value="theory">Licence</option>
-                        <option value="practical"
-
+                        value="Licence">Licence</option>
+                        <option value="Master"
                        {{ (Request::get('parcours') == 'Master') ? 'selected' : ''}}
-
                         >Master</option>
                       </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label>Date d'ajout</label>
-                      <input type="date" class="form-control" placeholder="Enter email" name="date"  value="{{ Request::get('date')}}" placeholder="date">
-                    </div>
-
-                    <div class="form-group col-md-3">
                       <button class="btn btn-primary" type="submit" style="margin-top: 32px;">Rechercher</button>
-
                       <a class="btn btn-success" style="margin-top: 32px;" href="{{ url('admin/subject/list')}}">Annuler</a>
                     </div>
-
                   </div>
                 </div>
               </form>
@@ -81,7 +57,6 @@
               <div class="card-header">
                 <h3 class="card-title">Liste des spécialités </h3>
               </div>
-
               <div class="card-body p-0">
                 <table class="table">
                   <thead>
@@ -98,7 +73,7 @@
                   </thead>
                   <tbody>
 
-                    @foreach($getRecord as $value)
+                    @forelse($getRecord as $value)
                     <tr>
                       <td>{{ $value->id }}</td>
                       <td>{{ $value->name }}</td>
@@ -116,12 +91,16 @@
                       <td>{{ $value->created_by_name}}</td>
                       <td>{{ date('d-m-Y H:i ', strtotime($value->created_at)) }}</td>
 
-                      <td>
+                      <td style="min-width: 250px;">
                         <a href="{{ url('admin/subject/edit/'.$value->id)}}" class="btn btn-primary">Modifier</a>
                         <a href="{{url('admin/subject/delete/'.$value->id)}}" class="btn btn-danger">Supprimer</a>
                       </td>
                     </tr>
-                    @endforeach 
+                    @empty
+                      <tr>
+                        <td colspan="100%" style="text-align: center;">Aucun résultat trouvé</td>
+                      </tr>
+                    @endforelse 
                   </tbody>
                 </table>
 

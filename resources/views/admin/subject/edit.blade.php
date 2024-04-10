@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Edit Subject</h1>
+            <h1>Ajouter une spécialisation</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -27,26 +27,41 @@
                 {{ csrf_field() }}
 
                 <div class="card-body">
+                <input type="hidden" value="{{ App\Models\SchoolYear::getActiveYear()->title }}" class="form-control" name="school_year_id"> 
+                <div class="form-group col-md-12">
+                  <label>Domaine<span style="color:red;">*</span></label>  
+                  <select class="form-control" required name="domain_id">
+                    <option value=""> Selectionner Domaine </option>
+                      @foreach($getDomain as $value)
+                        <option {{(old('domain_id',$getRecord->domain_id) == $value->id) ? 'selected' : ''}} value="{{ $value->id}}">{{ $value->name}}</option>
+                      @endforeach
+                  </select> 
+                </div>
+
+
 
                   <div class="form-group">
-                    <label>Subject Name</label>
-                    <input type="text" class="form-control" placeholder="Class name" name="name" value="{{$getRecord->name }}" required >
-                  </div>
-
-                  <div class="form-group">
-                    <label>Type</label>
-                    <select class="form-control" name="type">
-                      <option value="">---Select type---</option>
-                      <option {{($getRecord->type == 'theory') ? 'selected' : ''}} value="theory">Theory</option>
-                      <option {{($getRecord->type == 'practical') ? 'selected' : ''}} value="practical">Practical</option>
+                    <label>Parcours</label>
+                    <select id="parcours" name="parcours" class="form-control">
+                      <option value=""> Sélectionner le parcours </option>
+                      <option {{(old('parcours', $getRecord->parcours) == 'Licence') ? 'selected' : ''}} value="Licence">Licence</option>
+                      <option {{(old('parcours', $getRecord->parcours) == 'Master') ? 'selected' : ''}} value="Master">Master</option>
                     </select>
                   </div>
 
                   <div class="form-group">
+                    <label>Spécialisation</label>
+                    <input type="text" class="form-control" placeholder="" name="name" value="{{ old('name',$getRecord->name)}}" >
+                  </div>
+
+
+
+                  <div class="form-group">
                     <label>Status</label>
-                    <select class="form-control" name="status">
-                      <option {{($getRecord->status == 0) ? 'selected' : ''}} value="0">Active</option>
-                      <option {{($getRecord->status == 1) ? 'selected' : ''}} value="1">Inactive</option>
+                    <select class="form-control" required name="status">
+                      <option value=""> Selectionner Status </option>
+                      <option {{(old('status',$getRecord->status) == 0) ? 'selected' : ''}} value= "0">Active</option>
+                      <option {{(old('status',$getRecord->status) == 1) ? 'selected' : ''}} value= "1">Inactive</option>
                     </select>
                   </div>
 
@@ -54,7 +69,7 @@
                 </div>
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Update</button>
+                  <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </div>
               </form>
             </div>

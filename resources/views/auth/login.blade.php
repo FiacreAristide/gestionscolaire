@@ -1,4 +1,4 @@
-login<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -16,7 +16,6 @@ login<!DOCTYPE html>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-  <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
       <a href="" class="h1"><b>Se Connecter</b></a>
@@ -46,15 +45,15 @@ login<!DOCTYPE html>
         </div>
         <div class="row">
           <div class="col-8">
-            <div class="icheck-primary">
+            <!-- <div class="icheck-primary">
               <input type="checkbox" id="remember" name="remember">
               <label for="remember">
                Se souvenir de moi
               </label>
-            </div>
+            </div> -->
           </div>
           <!-- /.col -->
-          <div class="col-4">
+          <div class="col-6">
             <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
           </div>
           <!-- /.col -->
@@ -63,9 +62,9 @@ login<!DOCTYPE html>
 
       <!-- /.social-auth-links -->
 
-      <p class="mb-1">
+      <!-- <p class="mb-1">
         <a href="{{url('forgot-password')}}">Mot de passe oublié</a>
-      </p>
+      </p> -->
     </div>
     <!-- /.card-body -->
   </div>

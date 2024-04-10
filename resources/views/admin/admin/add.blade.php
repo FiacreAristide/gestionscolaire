@@ -27,11 +27,17 @@
                 {{ csrf_field() }}
 
                 <div class="card-body">
-
+                  <input type="hidden" name="school_year_id" value="{{ $getActiveYear->id }}"> 
                   <div class="form-group">
                     <label>Nom</label>
-                    <input type="text" class="form-control" placeholder="Enter name" name="name" required value="{{ old('name') }}">
+                    <input type="text" class="form-control" placeholder="" name="name" required value="{{ old('name') }}">
                   </div>
+
+                  <div class="form-group">
+                    <label>Prénom</label>
+                    <input type="text" class="form-control" placeholder="" name="prenom" required value="{{ old('prenom') }}">
+                  </div>
+
                   <div class="form-group">
                     <label>Email</label>
                     <input type="email" class="form-control" placeholder="Enter email" name="email" required value="{{ old('email') }}">
@@ -57,6 +63,4 @@
     </section>
     <!-- /.content -->
   </div>
- 
-
   @endsection

@@ -54,10 +54,10 @@
                           {{ $dayMapping[$valueW['week_name']] }}
                         </td>
                         <td>
-                          {{ !empty($valueW['start_time']) ? date('h:i', strtotime($valueW['start_time'])) : '' }}
+                          {{ $valueW['start_time'] }}
                         </td>
                         <td>
-                          {{ !empty($valueW['start_time']) ? date('h:i', strtotime($valueW['end_time'])) : '' }}
+                          {{ $valueW['end_time'] }}
                         </td>
                         <td>{{ $valueW['room_number']}}</td>
                       </tr>

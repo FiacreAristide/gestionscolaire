@@ -73,6 +73,7 @@
                     <tr>
                       <th>id</th>
                       <th>Nom Classe</th>
+                      <th>Frais de scolarité</th>
                       <th>Status</th>
                       <th>Ajouter par</th>
                       <th>Ajouté le</th>
@@ -81,10 +82,11 @@
                   </thead>
                   <tbody>
 
-                    @foreach($getRecord as $value)
+                    @forelse($getRecord as $value)
                       <tr>
                         <td>{{ $value->id }}</td>
                         <td>{{ $value->name }}</td>
+                        <td style="min-width: 150px;">{{ number_format($value->amount) }} FCFA</td>
                         <td>
 
                         @if($value->status == 0)
@@ -102,7 +104,11 @@
                         <a href="{{url('admin/class/delete/'.$value->id)}}" class="btn btn-danger">Supprimer</a>
                       </td>
                       </tr>
-                    @endforeach 
+                    @empty
+                      <tr>
+                        <td colspan="100%" style="text-align: center;">Aucun résultat trouvé</td>
+                      </tr>
+                    @endforelse 
                   </tbody>
                 </table>
 

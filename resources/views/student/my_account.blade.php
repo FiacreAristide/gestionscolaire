@@ -70,8 +70,8 @@
 
                       <div class="form-group col-md-12">
                         <label>Pays de naissance<span style="color:red;">*</span></label>
-                        <select class="form-select" id="pays_naissance" name="pays_naissance">
-                          <option {{(old('pays_naissance') == 'Togo') ? 'selected' : ''}}  value="TG">Togo</option>                   
+                        <select class="form-control" id="pays_naissance" name="pays_naissance">
+                          <option {{(old('pays_naissance') == 'Togo') ? 'selected' : ''}}  value="TG">Togo</option>
                           <option value="Afghanistan">Afghanistan</option>
                           <option value="Aland Islands">Aland Islands</option>
                           <option value="Albania">Albania</option>
@@ -353,15 +353,22 @@
                         </select>
                       </div>
 
+                       <div class="form-group col-md-12">
+                        <label for="profile_pic">Photo</label>
+                        <input class="form-control" type="file" name="profile_pic" id="profile_pic">
+                        @if(!empty($getRecord->getProfile()))
+                          <img src="{{ $getRecord->getProfile()}}" width="100px">
+                        @endif
+                      </div>
+
                       <div class="form-group col-md-12">
                         <label>Situation Matrimoniale</label>
                         <select class="form-control" name="situation_matrimoniale">
-                          <option {{(old('situation_matrimoniale',$getRecord->situation_matrimoniale) == 'Celibataire') ? 'selected' : ''}} value = "Célibataire">Célibataire</option>
-                          <option {{(old('situation_matrimoniale',$getRecord->situation_matrimoniale) == 'Marie') ? 'selected' : ''}} value = "Marié">Marié(é)</option>
-                          <option {{(old('situation_matrimoniale',$getRecord->situation_matrimoniale) == 'Veuve') ? 'selected' : ''}} value = "Veuve">Veuve</option>
-                          <option {{(old('situation_matrimoniale',$getRecord->situation_matrimoniale) == 'Divorce') ? 'selected' : ''}} value = "Divorcé">Divorcé(e)</option>
+                          <option {{(old('situation_matrimoniale',$getRecord->situation_matrimoniale) == 'Celibataire') ? 'selected' : ''}} value="Célibataire">Célibataire</option>
+                          <option {{(old('situation_matrimoniale',$getRecord->situation_matrimoniale) == 'Marie') ? 'selected' : ''}} value="Marié">Marié(é)</option>
+                          <option {{(old('situation_matrimoniale',$getRecord->situation_matrimoniale) == 'Veuve') ? 'selected' : ''}} value="Veuve">Veuve</option>
+                          <option {{(old('situation_matrimoniale',$getRecord->situation_matrimoniale) == 'Divorce') ? 'selected' : ''}} value="Divorcé">Divorcé(e)</option>
                         </select>                        
-                        <div style="color: red;">{{ $errors->first('name') }}</div>
                       </div>
 
 
@@ -378,12 +385,11 @@
                       <div class="form-group col-md-12">
                         <label>Ville</label>
                         <input type="text" class="form-control" placeholder="" name="ville" value="{{ old('ville',$getRecord->ville,$getRecord->name) }}">
-                        <div style="color: red;">{{ $errors->first('name') }}</div>
                       </div> 
 
                       <div class="form-group col-md-12">
                         <label>Pays de résidence</label>
-                        <select class="form-select" id="pays_residence" name="pays_residence">
+                        <select class="form-control" id="pays_residence" name="pays_residence">
                           <option {{(old('pays_residence') == 'Togo') ? 'selected' : ''}}  value="TG">Togo</option>
                           <option {{(old('pays_residence') == 'Afghanistan') ? 'selected' : ''}} value="Afghanistan">Afghanistan</option>
                           <option {{(old('pays_residence') == 'Afghanistan') ? 'selected' : ''}} value="Aland Islands">Aland Islands</option>
@@ -675,7 +681,6 @@
                         <input type="tel" class="form-control" name="tel_mere" value="{{ old('tel_mere',$getRecord->tel_mere) }}" placeholder="99-99-99-99" pattern="(9[0-9]|7[0-9])-[0-9]{2}-[0-9]{2}-[0-9]{2}">
                       </div> 
 
-
                       <div class="form-group col-md-12">
                         <label>Religion</label>
                         <select class="form-control" name="religion">
@@ -704,11 +709,11 @@
                       <div class="form-group col-md-12">
                         <label for="etatPhys">État physique :</label>
                         <select id="etatPhys" name="etatPhys" class="form-control">
-                          <option {{ old('etatPhys',$getRecord->etatPhys)}} value="bonneSante">En bonne santé</option>
-                          <option {{ old('etatPhys',$getRecord->etatPhys)}} value="maladielegere">Maladie légère</option>
-                          <option {{ old('etatPhys',$getRecord->etatPhys)}} value="maladiechronique" >Maladie chronique</option>
-                          <option {{ old('etatPhys',$getRecord->etatPhys)}} value="convalescence" >Convalescence</option>
-                          <option {{ old('etatPhys',$getRecord->etatPhys)}} value="Autres" >Autres</option>
+                          <option {{ old('etatPhys',$getRecord->etatPhys)}} value="En bonne santé">En bonne santé</option>
+                          <option {{ old('etatPhys',$getRecord->etatPhys)}} value="Maladie légère">Maladie légère</option>
+                          <option {{ old('etatPhys',$getRecord->etatPhys)}} value="Maladie chronique">Maladie chronique</option>
+                          <option {{ old('etatPhys',$getRecord->etatPhys)}} value="Convalescence">Convalescence</option>
+                          <option {{ old('etatPhys',$getRecord->etatPhys)}} value="Autres">Autres</option>
                         </select>
                       </div>
 
@@ -778,7 +783,7 @@
 
                                     <div class="form-group col-md-6">
                                       <label>Pays d'obtention du bac<span style="color:red;">*</span></label>
-                                      <select class="form-select" id="pays_obtention" name="pays_obtention">
+                                      <select class="form-control" id="pays_obtention" name="pays_obtention">
                                         <option {{(old('pays_obtention') == 'Togo') ? 'selected' : ''}}  value="TG">Togo</option>
                                         <option value="Afghanistan">Afghanistan</option>
                                         <option value="Aland Islands">Aland Islands</option>
@@ -1034,14 +1039,34 @@
                                         <option value="ZW">Zimbabwe</option>
                                       </select>                   
                                     </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-                                    <div class="form-group col-md-12">
+
+                                 
+
+                                    
+
+                                  
+
+                          
+
+                                    
+
+                                   
+
+                                    <div class="form-group col-md-6">
                                       <label>Email<span style="color:red;">*</span></label>
                                       <input type="email" class="form-control" placeholder="Enter email" name="email"  value="{{ old('email',$getRecord->email) }}">
 
                                       <div style="color: red;">{{ $errors->first('email') }}</div>
                                     </div>
-
+                                  </div>
 
                                     <div class="card-footer" style="margin-top: 20px; width: 100%;">
                                       <button type="submit" class="btn btn-primary" style="font-size: 20px;">Mettre à jour</button>

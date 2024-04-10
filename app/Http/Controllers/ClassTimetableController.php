@@ -8,6 +8,9 @@ use App\Models\CourseModel;
 use App\Models\ClassCourseModel;
 use App\Models\WeekModel;
 use App\Models\ClassCourseTimetableModel;
+use App\Models\SchoolYear;
+use App\Models\SelectedCoursesModel;
+use App\Models\StudentModel;
 use App\Models\User;
 use Auth;
 
@@ -17,12 +20,13 @@ class ClassTimetableController extends Controller
 {
     public function list(Request $request)
     {
+        $activeYear = SchoolYear::getActiveYear()->id;
+        $data['getActiveYear'] = SchoolYear::getActiveYear();
         $data['header_title'] = "Horaires";
-        $data['getClass'] = ClassModel::getClass();
-
+        $data['getClass'] = ClassModel::getClass($activeYear);
         if(!empty($request->course_id))
         {
-        $data['getCourse'] = ClassCourseModel::getMyCourse($request->class_id);
+            $data['getCourse'] = ClassCourseModel::getMyCourse($request->class_id,$activeYear);
         }
 
         $getWeek = WeekModel::getRecord();
@@ -65,7 +69,8 @@ class ClassTimetableController extends Controller
 
     public function get_course(Request $request)
     {
-       $getCourse = ClassCourseModel::getMyCourse($request->class_id);
+        $activeYear = SchoolYear::getActiveYear()->id;
+       $getCourse = ClassCourseModel::getMyCourse($request->class_id,$activeYear);
        $html = "<option value=''>Selectionner cours</option>";
        foreach($getCourse as $value)
        {
@@ -84,6 +89,7 @@ class ClassTimetableController extends Controller
             if(!empty($timetable['week_id']) && !empty($timetable['start_time']) && !empty($timetable['end_time']) && !empty($timetable['room_number']))
             {
                 $save = new ClassCourseTimetableModel;
+                $save->school_year_id = $request->school_year_id;
                 $save->class_id = $request->class_id;
                 $save->course_id = $request->course_id;
                 $save->week_id = $timetable['week_id'];
@@ -94,8 +100,6 @@ class ClassTimetableController extends Controller
 
             }
         }
-
-
         return redirect()->back()->with('success',"Emploi du temps enregistré avec succès");
     }
 
@@ -104,8 +108,10 @@ class ClassTimetableController extends Controller
     public function myTimetable()
     {
         $result = array();
-       
-        $getRecord = ClassCourseModel::getMyCourse(Auth::user()->class_id);
+        $class_id = StudentModel::where('user_id', Auth::id())->value('class_id');
+        $getRecord = ClassCourseModel::getMyCourseTimeTable($class_id);
+        //$getRecord = SelectedCoursesModel::getMyCourse(Auth::user()->id);
+        
 
         foreach($getRecord as $value)
         {
@@ -114,7 +120,6 @@ class ClassTimetableController extends Controller
             $week = array();
             foreach($getWeek as $valueW)
             {
-
                 $dataW = array();
                 $dataW['week_id'] = $valueW->id;
                 $dataW['week_name'] = $valueW->name;
@@ -133,18 +138,12 @@ class ClassTimetableController extends Controller
                 }
                 $week[] = $dataW;
             }
-
             $dataS['week'] = $week;
             $result[] = $dataS;
         }
-
-
         $data['getRecord'] = $result;
-
         $data['header_title'] = "Mes horaires";
         return view('student.my_timetable', $data);
-
-
     }
 
     //teacher side
