@@ -35,7 +35,8 @@ class AdminController extends Controller
     public function insert(Request $request)
     {
         request()->validate([
-            'email'=> 'required|email|unique:users'
+            'email'=> 'required|email|unique:users',
+            'password' => 'min:6'
         ]);
         $user = new User;
         $user->school_year_id = trim($request->school_year_id);

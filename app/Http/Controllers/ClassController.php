@@ -95,6 +95,9 @@ class ClassController extends Controller
         $save->name = $request->name;
         $save->amount = $request->amount;
         $save->status = $request->status;
+        $save->domain_id = $request->domain_id;
+        $save->mention_id = $request->mention;
+        $save->status = $request->status;
         $save->save();
         return redirect('admin/class/list')->with('success', "classe modifiée avec succès");
     }

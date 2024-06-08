@@ -444,6 +444,7 @@ class ExaminationsController extends Controller
     public function submitRegister(Request $request)
     {
         $validation = 0;
+        $activeYear = SchoolYear::getActiveYear()->id;
         if(!empty($request->mark))
         {
             foreach ($request->mark as $mark)
@@ -465,8 +466,12 @@ class ExaminationsController extends Controller
                 else
                 {
                     $save = new MarkRegisterModel;
+                    //Ligne récemment ajoutée
+                    $save->school_year_id = $activeYear;
                     $save->created_by = Auth::user()->id;
                 }
+               //Ligne récemment ajoutée
+               $save->school_year_id = $activeYear;
                $save->student_id = $request->student_id;
                $save->exam_id = $request->exam_id;
                $save->class_id = $request->class_id;
@@ -554,7 +559,6 @@ class ExaminationsController extends Controller
     }
 
     //Student side
-    // C'est celui là
     public function myExamResult()
     {
         $result = array();
@@ -643,11 +647,11 @@ class ExaminationsController extends Controller
 {
     $exam_id = $request->exam_id;
     $student_id = $request->student_id;
-
+    $activeYear = SchoolYear::getActiveYear()->id;
     // Récupération des autres données...
     $data['getTotalCredit'] = SelectedCoursesModel::getCreditSum($student_id);
     $data['getStudent'] = StudentModel::getSingle($student_id);
-    $getExamCourse = MarkRegisterModel::getExamCourse($exam_id, $student_id);
+    $getExamCourse = MarkRegisterModel::getExamCourse($exam_id, $student_id,$activeYear);
 
     // Regroupement des cours par UE
     $coursesByUE = [];
@@ -662,7 +666,6 @@ class ExaminationsController extends Controller
                 'code_ue' => $exam['code_ue'],
                 'ue' => $exam['ue'],
                 'course_semester' => $exam['course_semester']
-
             ];
         }
         $average = ($exam['note_devoir'] + $exam['note_exam']) / 2;
@@ -690,7 +693,6 @@ class ExaminationsController extends Controller
             $ue['average'] = 0;
         }
     }
-
     // Regroupement des cours par semestre
     $coursesBySemester = [];
     //dd($coursesByUE);
@@ -702,8 +704,9 @@ class ExaminationsController extends Controller
         $coursesBySemester[$semester][] = $ueData;
     }
 
+    // Tri des clés de $coursesBySemester dans l'ordre croissant
+    ksort($coursesBySemester);
     $data['coursesBySemester'] = $coursesBySemester;
-
     // Génération du PDF
     $pdf = PDF::loadView('admin.examinations.student_exam_result', $data);
     $filename = 'relevé_notes.pdf';

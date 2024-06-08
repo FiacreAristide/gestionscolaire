@@ -68,6 +68,7 @@ class StudentController extends Controller
         request()->validate([
             'email'=> 'required|email|unique:users'
         ]);
+
         $user = new User;
         $user->school_year_id = trim($request->school_year_id);
         $user->name = trim($request->name);
@@ -161,8 +162,8 @@ class StudentController extends Controller
         //dd($request->all());
         // request()->validate([
         //     'email' => 'required|email|unique:users',
-        //     'telephone' => 'max:8|min:8',
-        //     'password' => 'min:6'
+            // 'telephone' => 'max:8|min:8',
+            // 'password' => 'min:6'
         // ]);
 
 

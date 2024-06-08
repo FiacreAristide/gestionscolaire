@@ -38,7 +38,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($getRecord as $value)
+                                    @if(!empty($getRecord))
+                                        @forelse($getRecord as $value)
                                         <tr>
                                             <td><input type="checkbox" name="course_id[]" value="{{ $value->id }}"></td>
                                             <td>{{ $value->code_ue }}</td>
@@ -48,7 +49,12 @@
                                             <td style="text-align: end;" class="coeff">{{ $value->coeff }}</td>
                                             <td style="text-align: end;">{{ $value->type }}</td>
                                         </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr style="text-align: center;">Aucun cours trouvé</tr>
+                                        @endforelse
+                                    @else
+                                        <tr>Aucun cours trouvé</tr>
+                                    @endif
                                         <tr id="totalCoeff">
                                             <td></td>
                                             <td></td>
@@ -63,7 +69,6 @@
                                 <div class="footer" style="margin: 20px; text-align:center;">
                                   <button type="submit" class="btn btn-success">Valider</button>
                                   <a href="{{ url('student/my_courses_list_print/'.$value->id)}}" class="btn btn-primary" target="_blank">Voir mes UEs</a>
-                                  <button type="button" class="btn btn-danger" id="resetForm">Réinitialiser</button>
                                 </div>
                             </form>
                         </div>

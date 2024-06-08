@@ -28,7 +28,7 @@ class MarkRegisterModel extends Model
                 ->get();
     }
 
-    static public function getExamCourse($exam_id, $student_id)
+    static public function getExamCourse($exam_id, $student_id,$active_year)
     {
         return MarkRegisterModel::select('mark_register.*','exam.name as exam_name','course.name as course_name','course.ue as ue','course.code_ue as code_ue','course.coeff as credit','course.code_ecue as ecue','course.semestre as course_semester')
                 ->join('exam','exam.id','=','mark_register.exam_id')
@@ -38,6 +38,7 @@ class MarkRegisterModel extends Model
                 ->join('exam_calendar as exam_course','exam_calendar.course_id','=','mark_register.course_id')
                 ->where('mark_register.exam_id','=',$exam_id)
                 ->where('mark_register.student_id','=',$student_id)
+                ->where('mark_register.school_year_id','=',$active_year)
                 ->distinct()
                 ->groupBy('course.code_ue')
                 ->get();
