@@ -300,10 +300,8 @@ class ExaminationsController extends Controller
     //Teacher side
     public function myExamTimetableTeacher()
     {
-
         $result = array();
         $getClass = CourseTeacherModel::getMyClassCourseGroup(Auth::user()->id);
-
         foreach($getClass as $class)
         {
             $dataC = array();
@@ -329,63 +327,16 @@ class ExaminationsController extends Controller
                $dataS['passing_mark'] = $valueS->passing_mark;
                $courseArray[] = $dataS;
             }
-
                 $dataE['course'] = $courseArray;
                 $examArray[]= $dataE;
-
             }
             $dataC['exam'] = $examArray;
-            
             $result[] = $dataC;
         }
-
-       $data['getRecord'] = $result;
-
+        $data['getRecord'] = $result;
         $data['header_title'] = "Calendrier| Examens";
         return view('teacher.my_exam_timetable',$data);
     }
-
-
-//     public function examRegister(Request $request)
-// {
-//     $activeYear = SchoolYear::getActiveYear()->id;
-//     $data['getClass'] = ClassModel::getClass($activeYear);
-//     $data['getExam'] = ExamModel::getExam($activeYear);
-
-//     // Récupérer les cours associés à la classe de l'étudiant
-//     if(!empty($request->get('exam_id')) && !empty($request->get('class_id')))
-//     {
-//         $class_id = $request->get('class_id');
-//         $exam_id = $request->get('exam_id');
-//         $data['getCourse'] = ExamCalendarModel::getCourse($exam_id, $class_id, $activeYear);
-
-//         // Récupérer les cours sélectionnés par l'étudiant
-//         $selected_courses = SelectedCoursesModel::where('student_id', Auth::id())->pluck('course_id')->toArray();
-
-//         // Récupérer les cours supplémentaires non associés à la classe de l'étudiant
-//         $additional_courses = SelectedCoursesModel::where('student_id', Auth::id())
-//             ->whereNotIn('course_id', function($query) use ($class_id) {
-//                 $query->select('course_id')->from('exam_calendar')->where('class_id', $class_id);
-//             })
-//             ->pluck('course_id')
-//             ->toArray();
-
-//         // Fusionner les cours associés à la classe et les cours supplémentaires
-//         $courses = array_merge($selected_courses, $additional_courses);
-
-//         // Récupérer les détails des cours à partir de leurs IDs
-//         $additional_courses_details = CourseModel::whereIn('id', $courses)->get();
-
-//         // Fusionner les cours associés à la classe et les cours supplémentaires dans un seul tableau
-//         $data['additional_courses'] = $additional_courses_details->merge($data['getCourse']);
-
-//         // Récupérer les étudiants de la classe
-//         $data['getStudent'] = StudentModel::getStudentClass($class_id, $activeYear);
-//     }
-
-//     $data['header_title'] = "NotesM";
-//     return view('admin.examinations.register', $data);
-// }
 
     public function examRegister(Request $request)
     {
@@ -410,31 +361,14 @@ class ExaminationsController extends Controller
         if (!empty($request->get('exam_id')) && !empty($request->get('class_id')))
         {
         $data['getStudent'] = StudentModel::getStudentWhoMissedCourse($request->get('class_id'), $activeYear);
-        // dd($data['getStudent']);
         $studentId = $data['getStudent']->pluck('user_id');
-
         $coursesByStudent = [];
-
         foreach ($studentId as $student_id) {
             $coursesByStudent[$student_id] = ExamCalendarModel::getCoursesForRecovery($request->get('exam_id'), $request->get('class_id'), $activeYear, $student_id);
         }
-
         $data['coursesByStudent'] = $coursesByStudent;
-        //dd($data['coursesByStudent']);
     }
 
-        // if(!empty($request->get('exam_id')) && !empty($request->get('class_id')))
-        // {
-        //     $data['getStudent'] = StudentModel::getStudentWhoMissedCourse($request->get('class_id'),$activeYear);
-        //     //dd($data['getStudent']);
-        //     $studentId = $data['getStudent']->pluck('user_id');
-        //     dd($studentId);
-        //     foreach($studentId as $student_id)
-        //     {
-        //         $data['getCourse'] = ExamCalendarModel::getCoursesForRecovery($request->get('exam_id'),$request->get('class_id'),$activeYear,$student_id);
-        //     }         
-        //     //dd($data['getCourse']);
-        // }
         $data['header_title'] = "Notes|Rattrapage";
         return view('admin.examinations.makeupregister',$data);
     }
@@ -466,11 +400,9 @@ class ExaminationsController extends Controller
                 else
                 {
                     $save = new MarkRegisterModel;
-                    //Ligne récemment ajoutée
                     $save->school_year_id = $activeYear;
                     $save->created_by = Auth::user()->id;
                 }
-               //Ligne récemment ajoutée
                $save->school_year_id = $activeYear;
                $save->student_id = $request->student_id;
                $save->exam_id = $request->exam_id;
@@ -550,7 +482,6 @@ class ExaminationsController extends Controller
         $data['getExam'] = ExamCalendarModel::getTeacherExam(Auth::user()->id);
         if(!empty($request->get('exam_id')) && !empty($request->get('class_id')))
         {
-            //$data['getCourse'] = ExamCalendarModel::getCourse($request->get('exam_id'),$request->get('class_id'));
             $data['getCourse'] = ExamCalendarModel::getTeacherCourseOnly($request->get('exam_id'),$request->get('class_id'),Auth::user()->id);
             $data['getStudent'] = StudentModel::getStudentClass($request->get('class_id'),$activeYear);
         }
@@ -633,14 +564,12 @@ class ExaminationsController extends Controller
         $nomPrenom = $nom . ' ' . $prenom;
         $nomMatricule = $nomPrenom . PHP_EOL . $matricule;
 
-        //$data['header_title'] = "Carte étudiant";
         $data['getInfos'] = $studentInfos;
         $data['qrCodeInfos'] = $nomMatricule;
 
         $pdf = PDF::loadView('admin.student.card',$data);
         $filename = 'carte_etudiant_' . $user->name . '.pdf';
         return $pdf->download($filename);
-        //return view('admin.student.card', $data);
     }
 
    public function printResult(Request $request)
@@ -695,7 +624,6 @@ class ExaminationsController extends Controller
     }
     // Regroupement des cours par semestre
     $coursesBySemester = [];
-    //dd($coursesByUE);
     foreach ($coursesByUE as $ueData) {
         $semester = $ueData['course_semester']; 
         if (!isset($coursesBySemester[$semester])) {
@@ -712,63 +640,6 @@ class ExaminationsController extends Controller
     $filename = 'relevé_notes.pdf';
     return $pdf->download($filename);
 }
-
-
-//     public function printResult(Request $request)
-// {
-//     $exam_id = $request->exam_id;
-//     $student_id = $request->student_id;
-
-//     // Récupération des autres données...
-//     $data['getTotalCredit'] = SelectedCoursesModel::getCreditSum($student_id);
-//     $data['getStudent'] = StudentModel::getSingle($student_id);
-//     $getExamCourse = MarkRegisterModel::getExamCourse($exam_id, $student_id);
-
-//     // Regroupement des cours par UE
-//     $coursesByUE = [];
-//     foreach ($getExamCourse as $exam) {
-//         $ue = $exam['ue'];
-//         if (!isset($coursesByUE[$ue])) {
-//             $coursesByUE[$ue] = [
-//                 'courses' => [],
-//                 'credits' => 0,
-//                 'totalAverage' => 0,
-//                 'valid' => false,
-//                 'code_ue' => $exam['code_ue'],
-//                 'ue' => $exam['ue'],
-//             ];
-//         }
-//         $average = ($exam['note_devoir'] + $exam['note_exam']) / 2;
-//         $coursesByUE[$ue]['courses'][] = [
-//             'course_name' => $exam['course_name'],
-//             'note_devoir' => $exam['note_devoir'],
-//             'note_exam' => $exam['note_exam'],
-//             'average' => $average,
-//             'credit' => $exam['credit'],
-//             'ecue' => $exam['ecue']
-//         ];
-//         $coursesByUE[$ue]['credits'] += $exam['credit'];
-//         $coursesByUE[$ue]['totalAverage'] += $average;
-//         if ($average >= 10) {
-//             $coursesByUE[$ue]['valid'] = true;
-//         }
-//     }
-
-//     // Calcul de la moyenne pour chaque UE
-//     foreach ($coursesByUE as &$ue) {
-//         if (count($ue['courses']) > 0) {
-//             $ue['average'] = $ue['totalAverage'] / count($ue['courses']);
-//         } else {
-//             $ue['average'] = 0;
-//         }
-//     }
-
-//     $data['coursesByUE'] = $coursesByUE;
-//     $pdf = PDF::loadView('admin.examinations.student_exam_result',$data);
-//     $filename = 'relevé_notes.pdf';
-//     return $pdf->download($filename);
-//     //return view('admin.examinations.student_exam_result', $data);
-// }
 }
 
 

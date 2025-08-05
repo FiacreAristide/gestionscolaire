@@ -13,10 +13,8 @@ use Str;
 class AuthController extends Controller
 {
     public function login()
-
     {
         //dd(Hash::make(123456));
-
         if(!empty(Auth::check()))
         {
             if(Auth::user()->user_type == 1)
@@ -26,26 +24,19 @@ class AuthController extends Controller
 
             else if(Auth::user()->user_type == 2)
             {
-             return redirect('teacher/dashboard');               
+             return redirect('teacher/my_class_course');               
             }
 
             else if(Auth::user()->user_type == 3)
             {
-             return redirect('student/dashboard');               
-            }
-
-            else if(Auth::user()->user_type == 4)
-            {
-             return redirect('parent/dashboard');               
-            }                              
+             return redirect('student/my_courses');               
+            }                            
         }
         return view('auth.login');
     }
 
     public function authlogin(Request $request)
-
     {
-
         $remember = !empty($request->remember) ? true : false;
         if(Auth::attempt(['email'=>$request->email, 'password' => $request->password], true))
         {
@@ -57,18 +48,13 @@ class AuthController extends Controller
 
             else if(Auth::user()->user_type == 2)
             {
-             return redirect('teacher/dashboard');               
+             return redirect('teacher/my_class_course');               
             }
 
             else if(Auth::user()->user_type == 3)
             {
-             return redirect('student/dashboard');               
-            }
-
-            else if(Auth::user()->user_type == 4)
-            {
-             return redirect('parent/dashboard');               
-            }                                
+             return redirect('student/my_courses');               
+            }                            
         }
         else
         {
@@ -80,7 +66,6 @@ class AuthController extends Controller
         Auth::logout();
         return redirect(url(''));
     }
-
 
     public function forgotpassword()
     {
@@ -109,7 +94,7 @@ class AuthController extends Controller
 
     public function reset($token)
     {
-        $user = User::getTokenSingle($remember_token);
+        $user = User::getTokenSingle($token);
         if(!empty($user))
         {
 

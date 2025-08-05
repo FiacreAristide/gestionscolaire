@@ -52,17 +52,17 @@ class DashboardController extends Controller
     else if(Auth::user()->user_type == 2)
     {
         //Ce code ne fonctionne pas encore
-        $data['totalStudent'] = User::getTotalUser(3,$activeYear);
-        $data['totalTeacher'] = User::getTotalUser(2,$activeYear);
-        $data['totalAdmin'] = User::getTotalUser(1,$activeYear);
-        $data['totalExam'] = ExamModel::getTotalExam($activeYear);
-        $data['totalClass'] = ClassModel::getTotalClass($activeYear);
-       return view('teacher.dashboard');               
+        //$data['totalStudent'] = User::getTotalUser(3,$activeYear);
+        //$data['totalTeacher'] = User::getTotalUser(2,$activeYear);
+        //$data['totalAdmin'] = User::getTotalUser(1,$activeYear);
+        //$data['totalExam'] = ExamModel::getTotalExam($activeYear);
+        //$data['totalClass'] = ClassModel::getTotalClass($activeYear);
+       return view('teacher.my_class_course');               
    }
 
    else if(Auth::user()->user_type == 3)
    {
-       return view('student.dashboard');               
+       return view('student.my_courses');               
    }                          
 }
 }

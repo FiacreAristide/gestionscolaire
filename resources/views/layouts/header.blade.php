@@ -277,15 +277,6 @@
           @elseif(Auth::user()->user_type == 2)
 
             <li class="nav-item">
-              <a href="{{ url('teacher/dashboard')}}" class="nav-link @if(Request::segment(2) =='dashboard') active @endif">
-                <i class="fas fa-tachometer-alt"></i>
-                <p>
-                  Tableau de bord
-                </p>
-              </a>
-            </li>
-
-            <li class="nav-item">
               <a href="{{ url('teacher/my_class_course')}}" class="nav-link @if(Request::segment(2) =='my_class_course') active @endif">
                 <i class="far fa-circle"></i>
                 <p>
@@ -368,15 +359,6 @@
             </li>
 
           @elseif(Auth::user()->user_type == 3)
-
-            <li class="nav-item">
-              <a href="{{ url('student/dashboard')}}" class="nav-link @if(Request::segment(2) =='dashboard') active @endif">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                  Tableau de bord
-                </p>
-              </a>
-            </li>
 
             <li class="nav-item">
               <a href="{{ url('student/my_courses')}}" class="nav-link @if(Request::segment(2) =='my_courses') active @endif">
